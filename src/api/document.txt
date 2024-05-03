@@ -1,0 +1,14 @@
+login api:
+    + parameter (data)
+    + data Object include (data.account, data.password)
+    + response contain data Object (data.token)
+
+register api:
+    + parameter (data)
+    + data include 
+        (account:account, 
+        password: hashPassword(password), 
+        firstName: name.firstName, 
+        lastName: name.lastName, 
+        email: email, )
+    + response contain message
