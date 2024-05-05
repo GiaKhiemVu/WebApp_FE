@@ -1,7 +1,7 @@
 login api:
     + parameter (data)
     + data Object include (data.account, data.password)
-    + response contain data Object (data.token)
+    + response contain data Object (data.token) and cookie contain user info
 
 register api:
     + parameter (data)

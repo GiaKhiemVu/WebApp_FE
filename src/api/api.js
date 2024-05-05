@@ -1,18 +1,39 @@
 import axios from 'axios';
 import { apiRoute } from '@/route/route'; 
+import { getCookie } from '@/util/getCookie';
 
 const api = axios.create({
     baseURL: apiRoute.base.toString(), 
     headers: {"Content-Type": "application/json"},
+    withCredentials: true
 });
 
 api.interceptors.request.use((request) => {
-    console.log(
-        `URL: ${request.baseURL}${request.url}\nHeader: ${JSON.stringify(request.headers)}\nData: ${JSON.stringify(request.data.data)}`
-    );
+    const token = getCookie()['token']
+    if (token) {
+        request.headers.Authorization = `Bearer ${token}`;
+    }
+    console.log("Request:",{
+            "URL": request.baseURL + request.url,
+            "Header": request.headers,
+            "Data": request.data,
+            "containToken": !!request.headers.Authorization,
+        }
+    )
 
-    return request;
-});
+    return request
+})
+
+api.interceptors.response.use((response) => {
+    console.log("Response:",{
+            "Header": response.headers,
+            "Data": response.data,
+            "Set-Cookie Header:": response.headers['set-cookie'],
+        }
+    )
+
+    return response
+})
 
 export const login = async (data) => {
     if (!data.account||!data.password) {

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import RegisterForm from './registerForm';
 import { loginRoute } from '@/route/route';
 import { register } from '@/api/api';
-import { Dialog, Button } from '@mui/material';
+import { Dialog, Button, Card } from '@mui/material';
 
 function Register() {
     const [userData, setUserData] = useState()
@@ -40,11 +40,9 @@ function Register() {
             <RegisterForm submit={handleSubmit}/>
             <Dialog 
                 open={!!message} 
-                style={{ textAlign: 'center' }}
+                style={{ textAlign: 'center', margin: '20px' }}
             >
-                <div style={{ padding: '20px' }}>
-                    {message}
-                </div>
+                <Card sx={{padding: '10px', margin: '10px'}}>{message}</Card>
                 <Button 
                     onClick={() => {
                         if (message === 'Create success') { 
@@ -54,6 +52,7 @@ function Register() {
                         } 
                     }} 
                     style={{ margin: '10px' }}
+                    variant='outlined'
                 >
                     {message === 'Create success' ? 'Go to login' : 'OKay'}
                 </Button>
