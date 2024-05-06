@@ -4,6 +4,7 @@ import RegisterForm from './registerForm';
 import { loginRoute } from '@/route/route';
 import { register } from '@/api/api';
 import { Dialog, Button, Card } from '@mui/material';
+import LoginLayout from '../loginLayout';
 
 function Register() {
     const [userData, setUserData] = useState()
@@ -36,29 +37,30 @@ function Register() {
     }, [userData]);
 
     return (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh',}}>
-            <RegisterForm submit={handleSubmit}/>
-            <Dialog 
-                open={!!message} 
-                style={{ textAlign: 'center', margin: '20px' }}
-            >
-                <Card sx={{padding: '10px', margin: '10px'}}>{message}</Card>
-                <Button 
-                    onClick={() => {
-                        if (message === 'Create success') { 
-                            window.location.href = loginRoute.loginPage;
-                        } else { 
-                            setMessage(null); 
-                        } 
-                    }} 
-                    style={{ margin: '10px' }}
-                    variant='outlined'
+        <LoginLayout>
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh',}}>
+                <RegisterForm submit={handleSubmit}/>
+                <Dialog 
+                    open={!!message} 
+                    style={{ textAlign: 'center', margin: '20px' }}
                 >
-                    {message === 'Create success' ? 'Go to login' : 'OKay'}
-                </Button>
-            </Dialog>
-
-        </div>
+                    <Card sx={{padding: '10px', margin: '10px'}}>{message}</Card>
+                    <Button 
+                        onClick={() => {
+                            if (message === 'Create success') { 
+                                window.location.href = loginRoute.loginPage;
+                            } else { 
+                                setMessage(null); 
+                            } 
+                        }} 
+                        style={{ margin: '10px' }}
+                        variant='outlined'
+                    >
+                        {message === 'Create success' ? 'Go to login' : 'OKay'}
+                    </Button>
+                </Dialog>
+            </div>
+        </LoginLayout>
     );
 }
 

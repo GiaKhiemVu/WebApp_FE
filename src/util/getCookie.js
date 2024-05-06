@@ -15,8 +15,25 @@ export const getCookie = () => {
 
 export const getUserCookie = () => {
     let userInfo = getCookie()['user_info']
-    userInfo = userInfo.replace(/\\054/g, ',');
-    userInfo = JSON.parse(userInfo)
-    const userInfoToObject = JSON.parse(userInfo)
-    return userInfoToObject
+    if(userInfo){
+        userInfo = userInfo.replace(/\\054/g, ',');
+        userInfo = JSON.parse(userInfo)
+        const userInfoToObject = JSON.parse(userInfo)
+        return userInfoToObject
+    } else {
+        return null
+    }
+}
+
+export const isLogIn = () => {
+    let userInfo = getCookie()['user_info']
+    if(userInfo){
+        return true
+    }
+    return false
+}
+
+export const clearLoginCookies = () => {
+  document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+  document.cookie = "user_info=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 }

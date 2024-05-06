@@ -14,4 +14,12 @@ const apiRoute = {
     register: baseBackendURL+'register',
 }
 
-export { loginRoute, apiRoute }
+const dashboardRoute = {
+    home: baseURL,
+    menu: baseURL,
+    drink: baseURL,
+    food: baseURL,
+    about: baseURL,
+}
+
+export { loginRoute, apiRoute, dashboardRoute }
