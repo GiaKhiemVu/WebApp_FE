@@ -9,7 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
-import { FormIconify } from "../../../component/Iconify";
+import { FormIconify } from "../../Iconify";
 import { loginRoute } from "../../../route/route";
 import hashPassword from "@/util/hash";
 

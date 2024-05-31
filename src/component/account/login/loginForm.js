@@ -6,9 +6,9 @@ import {
   InputLabel,
   Link,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import { FormIconify } from "../../component/Iconify";
-import { loginRoute } from "../../route/route.js";
+import React, { useState } from "react";
+import { FormIconify } from "../../../component/Iconify";
+import { loginRoute } from "../../../route/route.js";
 import hashPassword from "@/util/hash";
 
 const LoginForm = ({ submit }) => {

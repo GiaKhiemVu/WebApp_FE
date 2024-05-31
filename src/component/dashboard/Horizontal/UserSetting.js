@@ -19,7 +19,7 @@ const settings = [
   {
     name: "Payment",
     onClick: () => {
-      console.log("Dashboard");
+      console.log("Payment");
     },
   },
   {
@@ -40,17 +40,16 @@ function UserSetting(props) {
   }, [props.user]);
 
   return (
-      <Box sx={{m: 2}}>
-        <Typography>
-          {"Hello, " + user.LastName}
-        </Typography>
-        <Divider/>
-        {settings.map((setting) => (
-          <MenuItem key={setting.name} onClick={setting.onClick}>
-            <Typography textAlign="center">{setting.name}</Typography>
-          </MenuItem>
-        ))}
-      </Box>
+    <Box sx={{ m: 2 }}>
+      <Typography>{"Hello, " + user.LastName}</Typography>
+      <Typography>{"Role: " + user.role}</Typography>
+      <Divider />
+      {settings.map((setting) => (
+        <MenuItem key={setting.name} onClick={setting.onClick}>
+          <Typography textAlign="center">{setting.name}</Typography>
+        </MenuItem>
+      ))}
+    </Box>
   );
 }
 

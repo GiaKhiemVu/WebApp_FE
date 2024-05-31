@@ -1,0 +1,3 @@
+.verticalSide {
+    @apply fixed h-[90%] text-yellow-700 bg-gray-100 w-[10%] mt-[4.5em]
+}

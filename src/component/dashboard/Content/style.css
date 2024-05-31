@@ -1,0 +1,67 @@
+.middleTitle {
+    @apply fixed mt-[5rem] ml-[11%] w-[89%] z-10 bg-white
+}
+
+.middleSubTitle {
+    @apply fixed mt-[7.5rem] ml-[11%] w-[89%] z-10 bg-white
+}
+
+.middleContent {
+    @apply absolute h-[79%] w-[89%] mt-[10rem] ml-[11%] pb-[3%] bg-slate-900 pr-[2%] overflow-auto
+}
+
+.middleContentAdmin {
+    @apply absolute h-[89%] w-[88%] max-w-fit mt-[5rem] ml-[11%] pb-[3%] bg-white pr-[2%] overflow-auto
+}
+
+.cardImg {
+    @apply h-[240px] w-[360px] object-contain p-[2%] rounded-3xl border-2 border-gray-300 shadow ml-[20px]
+}
+
+.cardItem {
+    @apply items-center justify-center text-center pl-[10px] pr-[10px] rounded-xl shadow-sm
+}
+
+.description {
+    @apply whitespace-normal break-words text-left mt-[10px]
+}
+
+.timeBox {
+    @apply absolute bg-slate-600 bg-opacity-25 rounded-full shadow p-[5px] m-[10px] font-bold ml-[30px]
+}
+
+.tab {
+    @apply w-[100px] border-[1px] bg-gray-300 pl-3 rounded-t-lg border-cyan-500
+}
+
+.clicked {
+    @apply bg-gray-50
+}
+
+.outerTable {
+    @apply border border-gray-200
+}
+
+@layer AdminContent {
+    .table {
+        @apply min-w-full divide-y divide-gray-500 border border-gray-500;
+    }
+
+    .table tr {
+        @apply border-b border-gray-500;
+    }
+
+    .table th,
+    .table td {
+        @apply py-3 px-4 text-gray-800 text-sm border-l border-gray-500;
+    }
+
+    .table th:first-child,
+    .table td:first-child {
+        @apply border-l-0;
+    }
+
+    .table th {
+        @apply bg-gray-100 font-semibold uppercase;
+    }
+}

@@ -1,6 +1,7 @@
+// api.js
 import axios from "axios";
 import { apiRoute } from "@/route/route";
-import { getCookie, getUserCookie } from "@/util/getCookie";
+import { getCookie } from "@/util/getCookie"; // Adjust the import path as needed
 
 const api = axios.create({
   baseURL: apiRoute.base.toString(),
@@ -62,17 +63,4 @@ export const register = async (data) => {
   }
 };
 
-export const getUser = async () => {
-  try {
-    const response = await api.get("getUser");
-    let data = getUserCookie();
-    if (data) {
-      return data;
-    } else {
-      return null;
-    }
-  } catch (error) {
-    throw new Error(error.response?.data?.message || error.message);
-  }
-};
 export default api;

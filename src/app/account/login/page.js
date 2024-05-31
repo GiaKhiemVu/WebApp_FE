@@ -1,9 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import LoginForm from "./loginForm";
+import LoginForm from "@/component/account/login/loginForm";
 import { login } from "@/api/api";
 import { Button, Card, Dialog } from "@mui/material";
-import LoginLayout from "./loginLayout";
+import LoginLayout from "@/component/account/login/loginLayout";
 import { dashboardRoute } from "@/route/route";
 
 const Login = () => {

@@ -6,120 +6,77 @@ import {
   Toolbar,
   Typography,
   IconButton,
-  MenuItem,
   Button,
   Menu,
   Tooltip,
   Box,
 } from "@mui/material";
-import { getUserCookie } from "@/util/getCookie";
-import { Iconify } from "../../Iconify";
+import { Icon } from "@iconify/react";
 import { dashboardRoute, loginRoute } from "@/route/route";
 import UserSetting from "./UserSetting";
-import NavbarItems from "./NavbarItems";
-import { getUser } from "@/api/api";
+import "./appbar.css";
+import PropTypes from "prop-types";
 
 export default function HorizontalNavbar(props) {
-  const [auth, setAuth] = useState(true);
-  const [user, setUser] = useState();
+  const [auth, setAuth] = useState(false);
+  const [user, setUser] = useState(props.user);
   const [anchorElUser, setAnchorElUser] = useState(null);
 
   useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const user = await getUser();
-        console.log(user);
-        return user;
-      } catch {
-        return null;
-      }
-    };
+    setUser(props.user);
+    setAuth(!!props.user);
+  }, [props.user]);
 
-    if (!getUserCookie()) {
-      fetchUser();
-    }
-    const userInfo = getUserCookie();
-    setUser(userInfo);
-  }, []);
+  const handleMenuOpen = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
 
-  useEffect(() => {
-    if (user) {
-      setAuth(true);
-    } else {
-      setAuth(false);
-    }
-  }, [user]);
+  const handleMenuClose = () => {
+    setAnchorElUser(null);
+  };
 
   return (
-    <AppBar position="static" sx={{ p: 1 }}>
-      <Container maxWidth="xl">
-        <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-            <Iconify icon="entypo:shop"></Iconify>
-          </IconButton>
+    <AppBar className="app">
+      <Container className="container">
+        <span className="navItem justify-start">
+          <Icon icon="openmoji:roasted-coffee-bean" className="bigIcon" />
           <Typography
-            variant="h6"
+            variant="h4"
             component="div"
-            sx={{ flexGrow: 1, cursor: "pointer" }}
+            className="shopTitle"
             onClick={() => {
               window.location.href = dashboardRoute.home;
             }}
           >
             TheCoffeeK
           </Typography>
-          <NavbarItems />
+        </span>
+        <span className="navItem">
           {auth ? (
-            <Box sx={{ flexGrow: 0, marginRight: "10px" }}>
+            <Box className="relative">
               <Tooltip title="Open profile">
-                <Box
-                  style={{
-                    border: "1px solid black",
-                    borderRadius: "50%",
-                    width: "35px",
-                    height: "35px",
-                    backgroundColor: "lightgray",
-                  }}
-                >
-                  <IconButton
-                    onClick={() => {
-                      setAnchorElUser(true);
-                    }}
-                    sx={{
-                      p: 0,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      width: "100%",
-                      height: "100%",
-                    }}
-                  >
-                    <Iconify icon="mdi:account" sx={{ fontSize: "30px" }} />
+                <Box className="boxAccount">
+                  <IconButton onClick={handleMenuOpen}>
+                    <Icon icon="mdi:account-outline" className="icon" />
                   </IconButton>
                 </Box>
               </Tooltip>
               <Menu
-                sx={{ mt: "60px", w: "200px" }}
+                className="accountDetail"
                 id="menu-appbar"
                 anchorEl={anchorElUser}
                 anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
+                  vertical: "bottom",
+                  horizontal: "center",
                 }}
-                keepMounted
                 transformOrigin={{
                   vertical: "top",
-                  horizontal: "right",
+                  horizontal: "center",
                 }}
                 open={Boolean(anchorElUser)}
-                onClose={() => setAnchorElUser(null)}
+                onClose={handleMenuClose}
               >
-                <UserSetting user={user}></UserSetting>
+                <UserSetting user={user} />
               </Menu>
             </Box>
           ) : (
@@ -142,8 +99,12 @@ export default function HorizontalNavbar(props) {
               </Button>
             </Toolbar>
           )}
-        </Toolbar>
+        </span>
       </Container>
     </AppBar>
   );
 }
+
+HorizontalNavbar.propTypes = {
+  user: PropTypes.object,
+};

@@ -1,56 +1,72 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import Welcome from "./Welcome";
-import { getUserCookie } from "@/util/getCookie";
 import { Paper } from "@mui/material";
-import { getUser } from "@/api/api";
+import "./style.css";
+import ChildContent from "./ChildContent";
+
+const MENUITEM = [
+  {
+    name: "Menu",
+  },
+  {
+    name: "Food",
+    child: ["Recommend", "Fast", "Dessert", "Meal"],
+  },
+  {
+    name: "Drink",
+    child: ["Recommend", "Coffee", "Tea", "Ice blended", "Signature"],
+  },
+  {
+    name: "Combo",
+  },
+];
+
+const ADMINFUNC = [
+  {
+    name: "ADMIN",
+    child: ["Modify", "Authorize"],
+  },
+];
 
 function VerticalNavbar(props) {
-  const [auth, setAuth] = useState(true);
   const [user, setUser] = useState();
 
   useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const user = await getUser();
-        return user;
-      } catch {
-        return null;
-      }
-    };
-
-    if (!getUserCookie()) {
-      fetchUser();
-    }
-    const userInfo = getUserCookie();
-    setUser(userInfo);
-  }, []);
-
-  useEffect(() => {
-    if (user) {
-      setAuth(true);
-    } else {
-      setAuth(false);
-    }
-  }, [user]);
+    setUser(props.user);
+  }, [props.user]);
 
   return (
-    <Paper
-      style={{
-        height: "100vh",
-        width: "100%",
-        display: "flex",
-        justifyContent: "flex-start",
-        alignItems: "center",
-        flexDirection: "column",
-        flex: "initial",
-      }}
-    >
+    <Paper className="verticalSide">
       <Welcome user={user} />
+      {MENUITEM.map((item, index) => {
+        return (
+          <ChildContent
+            key={index}
+            title={item.name}
+            itemList={item.child}
+            setCurrentContent={props.setCurrentContent}
+          />
+        );
+      })}
+      {user?.role === "admin" &&
+        ADMINFUNC.map((item, index) => {
+          return (
+            <ChildContent
+              key={index}
+              title={item.name}
+              itemList={item.child}
+              setCurrentContent={props.setCurrentContent}
+            />
+          );
+        })}
     </Paper>
   );
 }
 
-VerticalNavbar.propTypes = {};
+VerticalNavbar.propTypes = {
+  user: PropTypes.object,
+  setCurrentContent: PropTypes.func,
+};
 
 export default VerticalNavbar;

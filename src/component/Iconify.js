@@ -1,6 +1,5 @@
 import { Icon } from '@iconify/react';
 import { Box } from '@mui/material';
-import { IconifyIcon } from '@iconify/react/dist/offline';
 
 const Iconify = ({ icon, sx, ...other }) => {
   return <Box component="span" sx={{ display: 'inline-flex', alignItems: 'center', ...sx }} {...other}><Icon icon={icon} /></Box>;
