@@ -1,3 +1,7 @@
+.center {
+    @apply justify-center items-center text-center
+}
+
 .middleTitle {
     @apply fixed mt-[5rem] ml-[11%] w-[89%] z-10 bg-white
 }
@@ -14,12 +18,16 @@
     @apply absolute h-[89%] w-[88%] max-w-fit mt-[5rem] ml-[11%] pb-[3%] bg-white pr-[2%] overflow-auto
 }
 
+.middleImgAdmin{
+    @apply absolute h-[89%] max-w-fit mt-[5rem] ml-[11%] pb-[3%] bg-white pr-[2%] overflow-auto
+}
+
 .cardImg {
     @apply h-[240px] w-[360px] object-contain p-[2%] rounded-3xl border-2 border-gray-300 shadow ml-[20px]
 }
 
 .cardItem {
-    @apply items-center justify-center text-center pl-[10px] pr-[10px] rounded-xl shadow-sm
+    @apply items-center justify-center text-center pl-[10px] pr-[10px] rounded-xl shadow-sm w-[100%]
 }
 
 .description {
@@ -31,7 +39,7 @@
 }
 
 .tab {
-    @apply w-[100px] border-[1px] bg-gray-300 pl-3 rounded-t-lg border-cyan-500
+    @apply w-[100px] border-[1px] bg-gray-300 pl-3 rounded-t-lg border-cyan-500 sticky
 }
 
 .clicked {
@@ -39,29 +47,31 @@
 }
 
 .outerTable {
-    @apply border border-gray-200
+    @apply w-full bg-white shadow-md rounded-lg overflow-x-auto relative;
 }
 
-@layer AdminContent {
-    .table {
-        @apply min-w-full divide-y divide-gray-500 border border-gray-500;
-    }
+.table {
+    @apply border border-gray-200 relative;
+}
 
-    .table tr {
-        @apply border-b border-gray-500;
-    }
+.tableHeader {
+    @apply bg-gray-200 text-left font-medium text-gray-600 px-4 py-2 border border-gray-200 ;
+}
 
-    .table th,
-    .table td {
-        @apply py-3 px-4 text-gray-800 text-sm border-l border-gray-500;
-    }
+.tableRow:nth-child(even) {
+    @apply bg-gray-50;
+}
 
-    .table th:first-child,
-    .table td:first-child {
-        @apply border-l-0;
-    }
+td.tableCell {
+    @apply px-4 py-2 border border-gray-200;
+}
 
-    .table th {
-        @apply bg-gray-100 font-semibold uppercase;
+.removeBtn {
+    .icon{
+        @apply text-xl justify-center items-center text-center mt-2
     }
+}
+
+.saveInfoBox {
+    @apply absolute z-20 top-0 right-0 mt-4 mr-4 bg-green-500 text-white py-2 px-4 rounded-lg transition-opacity duration-500
 }

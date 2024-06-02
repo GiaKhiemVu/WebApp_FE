@@ -23,13 +23,3 @@ export const getUserForAdmin = async () => {
     throw new Error(error.response?.data?.message || error.message);
   }
 }
-
-export const getProductForAdmin = async () => {
-  try {
-    const response = await api.get("getProduct");
-    const data = response.data
-    return data
-  } catch(error){
-    throw new Error(error.response?.data?.message || error.message);
-  }
-}

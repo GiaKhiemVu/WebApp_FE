@@ -9,7 +9,7 @@ import AdminContent from "@/component/dashboard/Content/Admin/AdminContent";
 
 export default function Home() {
   const [user, setUser] = useState(null);
-  const [currentContent, setCurrentContent] = useState({ title: "MENU" });
+  const [currentContent, setCurrentContent] = useState({ title: "Menu" });
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -40,7 +40,7 @@ export default function Home() {
       <HorizontalNavbar user={user} />
       <VerticalNavbar user={user} setCurrentContent={setCurrentContent} />
       {currentContent.title !== "ADMIN" && (
-        <Content currentContent={currentContent} />
+        <Content currentContent={currentContent} user={user}/>
       )}
       {currentContent.title === "ADMIN" && <AdminContent currentContent={currentContent}/>}
     </>

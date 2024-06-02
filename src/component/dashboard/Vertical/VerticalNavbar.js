@@ -15,7 +15,7 @@ const MENUITEM = [
   },
   {
     name: "Drink",
-    child: ["Recommend", "Coffee", "Tea", "Ice blended", "Signature"],
+    child: ["Recommend", "Coffee", "Tea", "Ice Blended", "Signature"],
   },
   {
     name: "Combo",
@@ -25,7 +25,7 @@ const MENUITEM = [
 const ADMINFUNC = [
   {
     name: "ADMIN",
-    child: ["Modify", "Authorize"],
+    child: ["Modify", "Authorize", "Upload Image"],
   },
 ];
 

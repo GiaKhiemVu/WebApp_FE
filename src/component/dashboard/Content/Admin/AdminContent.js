@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Typography } from "@mui/material";
 import TableRender from "./TableRender";
+import ProductImage from "./ProductImage";
 
-const tabList = ["User", "Product", "Order"];
+const tabList = ["User", "Product", "Order", "Category"];
 
 function AdminContent(props) {
   const [clickState, setClickState] = useState(0);
@@ -31,6 +32,9 @@ function AdminContent(props) {
             <TableRender name={tabList[clickState]} />
           </div>
         </div>
+      )}
+      {props.currentContent.content === "Upload Image" && (
+        <ProductImage className="middleImgAdmin" />
       )}
     </>
   );
