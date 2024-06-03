@@ -38,8 +38,23 @@ function Content(props) {
     fetchItem();
   }, [props.currentContent]);
 
+  const addCart = (id, quantity) => {
+    const existingItemIndex = props.cart.findIndex((item) => item.id === id);
+
+    if (existingItemIndex !== -1) {
+      // If the item already exists, update its quantity
+      const updatedCart = [...props.cart];
+      updatedCart[existingItemIndex].quantity += quantity;
+      props.setCart(updatedCart);
+    } else {
+      // If the item doesn't exist, add it to the cart
+      props.setCart([...props.cart, { id, quantity }]);
+    }
+  }
+
   useEffect(() => {
     setUser(props.user);
+    console.log([props.user])
   }, [props.user]);
 
   return (
@@ -52,7 +67,12 @@ function Content(props) {
           {currentContent.content}
         </Typography>
       )}
-      <ContentItem className="middleContent" list={listItem} user={user} />
+      <ContentItem
+        className="middleContent"
+        list={listItem}
+        user={user}
+        addCart={addCart}
+      />
     </Paper>
   );
 }

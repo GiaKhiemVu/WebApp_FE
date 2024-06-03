@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import HorizontalNavbar from "@/component/dashboard/Horizontal/HorizontalNavbar";
 import VerticalNavbar from "@/component/dashboard/Vertical/VerticalNavbar";
-import { getUser } from "@/api/userService";
+import { addCart, getUser } from "@/api/userService";
 import { getUserCookie } from "@/util/getCookie";
 import Content from "@/component/dashboard/Content/Content";
 import AdminContent from "@/component/dashboard/Content/Admin/AdminContent";
@@ -10,6 +10,7 @@ import AdminContent from "@/component/dashboard/Content/Admin/AdminContent";
 export default function Home() {
   const [user, setUser] = useState(null);
   const [currentContent, setCurrentContent] = useState({ title: "Menu" });
+  const [cart, setCart] = useState([]);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -32,17 +33,24 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    console.log(currentContent);
-  }, [currentContent]);
+    console.log(cart);
+  }, [cart]);
 
   return (
     <>
       <HorizontalNavbar user={user} />
       <VerticalNavbar user={user} setCurrentContent={setCurrentContent} />
       {currentContent.title !== "ADMIN" && (
-        <Content currentContent={currentContent} user={user}/>
+        <Content
+          currentContent={currentContent}
+          user={user}
+          setCart={setCart}
+          cart={cart}
+        />
       )}
-      {currentContent.title === "ADMIN" && <AdminContent currentContent={currentContent}/>}
+      {currentContent.title === "ADMIN" && (
+        <AdminContent currentContent={currentContent} />
+      )}
     </>
   );
 }

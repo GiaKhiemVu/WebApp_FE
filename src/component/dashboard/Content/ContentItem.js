@@ -2,21 +2,22 @@ import { useEffect, useState } from "react";
 import { Grid, Card, CardMedia, Typography, Box, Button } from "@mui/material";
 import PropTypes from "prop-types";
 import { imageDecoder } from "@/util/imageUtil";
+import { addCart } from "@/api/userService";
 
 const seed = Array(10).fill({
   name: "Name",
   description: "abcxyz",
   cooktime: "15 mins",
   price: "10000",
-})
+});
 
 function ContentItem(props) {
-  const [list, setList] = useState(props.list?props.list:seed);
+  const [list, setList] = useState(props.list ? props.list : seed);
 
   useEffect(() => {
     props.list ? setList(props.list) : setList(seed);
-    console.log(props.list)
-  }, [props.list] )
+    console.log(props.list);
+  }, [props.list]);
 
   return (
     <>
@@ -55,7 +56,23 @@ function ContentItem(props) {
                   <Box style={{}} variant="outlined">
                     Price: {item.price} vnd
                   </Box>
-                  {props.user && <Button variant="outlined">Add to cart</Button>}
+                  {props.user && (
+                    <Button
+                      variant="outlined"
+                      onClick={() => {
+                        props.addCart(item.Pid, 1);
+                        addCart(
+                          {
+                            Pid: item.Pid,
+                            quantity: 1,
+                          },
+                          props.user.userId
+                        );
+                      }}
+                    >
+                      Add to cart
+                    </Button>
+                  )}
                 </div>
               </Card>
             </Grid>

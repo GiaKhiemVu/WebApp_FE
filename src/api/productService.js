@@ -46,9 +46,27 @@ export const getRecommend = async (type) => {
     const data = await api.get(`getProductByRecommend/${type}`);
     return data.data;
   } catch (err) {
-    throw new Error(error.response?.data?.message || error.message);
+    throw new Error(err.response?.data?.message || err.message);
   }
 };
+
+export const updateProduct = async (payload) => {
+  if(!payload){
+    return
+  }
+  try{
+    const data = await api.post("renewProduct", {
+      data: {
+        added: payload.addedObjects,
+        updated: payload.updatedObjects,
+        deleted: payload.removedObjects,
+      },
+    });
+    return data
+  } catch (err){
+    throw new Error(err.response?.data?.message || err.message);
+  }
+}
 
 export const getProductByCategory = async (id) => {
   if(!id){

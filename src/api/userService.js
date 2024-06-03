@@ -23,3 +23,12 @@ export const getUserForAdmin = async () => {
     throw new Error(error.response?.data?.message || error.message);
   }
 }
+
+export const addCart = async (payload, userId) => {
+  try {
+    const response = await api.post(`addCart/${userId}`, { data: payload });
+    return response;
+  } catch (error) {
+    throw new Error(error.response?.data?.message || error.message);
+  }
+};

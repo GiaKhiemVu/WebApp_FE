@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { getUserForAdmin } from "@/api/userService";
-import { formatString, getAllKeys } from "@/util/arrayUtil";
+import {
+  DataComparator,
+  formatString,
+  getAllKeys,
+} from "@/util/arrayUtil";
 import { Icon } from "@iconify/react";
 import { Button } from "@mui/material";
-import { labelException } from "@/util/exceptLabel";
-import { getProductForAdmin, getCategoryForAdmin } from "@/api/productService";
+import { labelException, labelRequired } from "@/util/labelHandle";
+import { getProductForAdmin, getCategoryForAdmin, updateProduct } from "@/api/productService";
+
+const compareObject = new DataComparator();
 
 function TableRender(props) {
   const [data, setData] = useState(null);
@@ -13,6 +19,7 @@ function TableRender(props) {
   const [editableCell, setEditableCell] = useState(null);
   const [showSaveInfo, setShowSaveInfo] = useState(null);
   const [labelProhibition, setLabelProhibition] = useState(null)
+  const [labelRequire, setLabelRequire] = useState(null)
 
   const saveAlert = (message) => {
     setShowSaveInfo(message);
@@ -47,8 +54,31 @@ function TableRender(props) {
     setData(updatedData);
   };
 
+  const save = async () => {
+    if (compareObject.isSameData(data)) {
+      saveAlert("Dont have any changes to save!");
+      return;
+    }
+    for (let row of data) {
+      for (let label of labelRequire) {
+        if (!row[label]) {
+          saveAlert(`Error: ${label} is required.`);
+          return;
+        }
+      }
+    }
+
+    try {
+      await updateProduct(compareObject.compare(data));
+      compareObject.loadOriginData(data)
+      saveAlert("Data saved successfully");
+      compareObject.loadOriginData(data);
+    } catch (error) {
+      saveAlert("Error saving data");
+    }
+  };
+
   useEffect(() => {
-    // Fetch user data when the component mounts
     async function fetchData() {
       try {
         let fetchedData = [];
@@ -56,18 +86,22 @@ function TableRender(props) {
           fetchedData = await getUserForAdmin().then((res) => res.data);
           setLabels(getAllKeys(fetchedData[0]));
           setLabelProhibition(labelException.user);
+          setLabelRequire(labelRequired.user)
         } else if (props.name === "Product") {
           fetchedData = await getProductForAdmin().then((res) => res.data);
           setLabels(getAllKeys(fetchedData[0]));
           setLabelProhibition(labelException.product);
+          setLabelRequire(labelRequired.product);
         } else if(props.name === "Category"){
           fetchedData = await getCategoryForAdmin().then((res) => res.data);
           setLabels(getAllKeys(fetchedData[0]));
-          setLabelProhibition(labelException.product);
+          setLabelProhibition(labelException.category);
+          setLabelRequire(labelRequired.category);
         }else {
           console.log("Write order api");
           // Call your order API here and set fetchedData and labels accordingly
         }
+        compareObject.loadOriginData(fetchedData);
         setData(fetchedData);
         console.log(fetchedData);
       } catch (error) {
@@ -117,9 +151,12 @@ function TableRender(props) {
                   editableCell.index === index ? (
                     <input
                       type="text"
-                      value={row[label] ? row[label] : "null"}
+                      value={row[label]?row[label]:""}
                       onChange={(e) => updateRow(e, rIndex, label)}
-                      onBlur={() => saveAlert("Saving your change")}
+                      onBlur={() => {
+                        save();
+                        saveAlert("Saving your change")
+                      }}
                       style={{ width: "100%" }}
                     />
                   ) : row[label] ? (
@@ -151,6 +188,7 @@ function TableRender(props) {
           )}
         </tbody>
       </table>
+      {props.name !== "User" && <Button variant="outlined" onClick={() => {save()}}>Save</Button>}
       {showSaveInfo && <div className="saveInfoBox">{showSaveInfo}</div>}
     </div>
   );
